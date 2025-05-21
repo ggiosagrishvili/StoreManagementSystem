@@ -7,8 +7,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoginPage2 extends Application {
     private Stage stage;
+    private final List<String> selectedProducts = new ArrayList<>();
 
     @Override
     public void start(Stage primaryStage) {
@@ -22,7 +26,6 @@ public class LoginPage2 extends Application {
 
         VBox inputLayout = new VBox(10, greetLabel, greetButton);
         inputLayout.setPadding(new Insets(20));
-        inputLayout.getStyleClass().add("center-box");
 
         Scene inputScene = new Scene(inputLayout, 400, 200);
         inputScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
@@ -49,9 +52,10 @@ public class LoginPage2 extends Application {
             String password = passwordField.getText();
 
             if (DatabaseConnection.validateUser(username, password)) {
-                messageLabel.setText("Logged in successfully.");
+                messageLabel.setText("Logged in");
+                showShopPage();
             } else {
-                messageLabel.setText("Login failed.");
+                messageLabel.setText("Not logged in");
             }
         });
 
@@ -91,14 +95,14 @@ public class LoginPage2 extends Application {
             String password = passwordField.getText();
 
             if (username.isEmpty() || password.isEmpty()) {
-                messageLabel.setText("Fill all fields.");
+                messageLabel.setText("Fill all fields");
                 return;
             }
 
             if (DatabaseConnection.registerUser(username, password)) {
-                messageLabel.setText("Registered successfully.");
+                messageLabel.setText("Registered successfully");
             } else {
-                messageLabel.setText("Registration failed.");
+                messageLabel.setText("Registration failed");
             }
         });
 
@@ -112,6 +116,56 @@ public class LoginPage2 extends Application {
         Scene registerScene = new Scene(vbox, 400, 300);
         registerScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
         stage.setScene(registerScene);
+    }
+
+    private void showShopPage() {
+        selectedProducts.clear();
+
+        Label shopLabel = new Label("Hello, this is your online shop!");
+
+        ComboBox<String> drinkBox = new ComboBox<>();
+        drinkBox.getItems().addAll("Coca Cola", "Fanta", "Sprite", "RC Cola", "Red Bull");
+        drinkBox.setPromptText("Drink");
+
+        ComboBox<String> dairyBox = new ComboBox<>();
+        dairyBox.getItems().addAll("Milk", "Cheese", "Yogurt", "Cottage cheese");
+        dairyBox.setPromptText("Dairy");
+
+        ComboBox<String> snackBox = new ComboBox<>();
+        snackBox.getItems().addAll("Chips", "Nuts", "Crackers", "Snickers");
+        snackBox.setPromptText("Snack");
+
+        ComboBox<String> juiceBox = new ComboBox<>();
+        juiceBox.getItems().addAll("Apple", "Orange", "Grape", "Cherry");
+        juiceBox.setPromptText("Juice");
+
+        ComboBox<String> breadBox = new ComboBox<>();
+        breadBox.getItems().addAll("White", "Whole grain", "Baguette");
+        breadBox.setPromptText("Bread");
+
+        ComboBox<String> cerealBox = new ComboBox<>();
+        cerealBox.getItems().addAll("Cornflakes", "Muesli", "Oats", "Buckwheat");
+        cerealBox.setPromptText("Cereal");
+
+        Button buyButton = new Button("Buy Products");
+        buyButton.setOnAction(e -> {
+            selectedProducts.clear();
+            if (drinkBox.getValue() != null) selectedProducts.add(drinkBox.getValue());
+            if (dairyBox.getValue() != null) selectedProducts.add(dairyBox.getValue());
+            if (snackBox.getValue() != null) selectedProducts.add(snackBox.getValue());
+            if (juiceBox.getValue() != null) selectedProducts.add(juiceBox.getValue());
+            if (breadBox.getValue() != null) selectedProducts.add(breadBox.getValue());
+            if (cerealBox.getValue() != null) selectedProducts.add(cerealBox.getValue());
+
+        });
+
+        VBox vbox = new VBox(10, shopLabel, drinkBox, dairyBox, snackBox,
+                juiceBox, breadBox, cerealBox, buyButton);
+        vbox.setPadding(new Insets(20));
+
+        Scene shopScene = new Scene(vbox, 400, 500);
+        shopScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+        stage.setScene(shopScene);
     }
 
     public static void main(String[] args) {
