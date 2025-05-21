@@ -3,46 +3,35 @@ package com.example.javafx;
 import java.sql.*;
 
 public class DatabaseConnection2 {
-    public static Connection getConnection() throws SQLException {
-        return SMS_DB_Connection.getConnection();
-    }
+    private static final String URL = "jdbc:postgresql://localhost:5432/StoreManagementSystem";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "gio140510";
 
-    public static boolean validateCustomer(String username, String password) {
-        String sql = "CREATE TABLE IF NOT EXCISTS customer (customer_id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100)";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public static boolean validateUser(String username, String password) {
+        String query = "SELECT * FROM customer WHERE username = ? AND password = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, username);
             stmt.setString(2, password);
+
             ResultSet rs = stmt.executeQuery();
             return rs.next();
-
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public static boolean registerCustomer(String username, String password) {
-        String checkQuery = "SELECT * FROM customer WHERE username = ?";
-        String insertQuery = "INSERT INTO customer (username, password) VALUES (?, ?)";
+    public static boolean registerUser(String username, String password) {
+        String insert = "INSERT INTO customer (username, password) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(insert)) {
 
-        try (Connection conn = getConnection();
-             PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
-
-            checkStmt.setString(1, username);
-            ResultSet rs = checkStmt.executeQuery();
-            if (rs.next()) {
-                return false;
-            }
-
-            try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
-                insertStmt.setString(1, username);
-                insertStmt.setString(2, password);
-                insertStmt.executeUpdate();
-                return true;
-            }
-
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
