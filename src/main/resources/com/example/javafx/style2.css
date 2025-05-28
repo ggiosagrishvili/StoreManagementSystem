@@ -1,6 +1,6 @@
 .root {
     -fx-font-family: 'Segoe UI', sans-serif;
-    -fx-background-color: blue;
+    -fx-background-color: #f7f9fc;
 }
 
 .label {
@@ -21,10 +21,23 @@
     -fx-background-color: #45a049;
 }
 
-.text-field, .password-field {
+.text-field, .password-field, .combo-box {
     -fx-background-radius: 6;
     -fx-border-color: #ccc;
     -fx-border-radius: 6;
     -fx-padding: 6 10;
     -fx-pref-width: 180;
+}
+
+.text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 6;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+.center-box {
+    -fx-alignment: center;
+    -fx-spacing: 10;
 }

@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +25,7 @@ public class LoginPage2 extends Application {
 
         VBox inputLayout = new VBox(10, greetLabel, greetButton);
         inputLayout.setPadding(new Insets(20));
+        inputLayout.getStyleClass().add("center-box");
 
         Scene inputScene = new Scene(inputLayout, 400, 200);
         inputScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
@@ -123,40 +123,22 @@ public class LoginPage2 extends Application {
 
         Label shopLabel = new Label("Hello, this is your online shop!");
 
-        ComboBox<String> drinkBox = new ComboBox<>();
-        drinkBox.getItems().addAll("Coca Cola", "Fanta", "Sprite", "RC Cola", "Red Bull");
-        drinkBox.setPromptText("Drink");
-
-        ComboBox<String> dairyBox = new ComboBox<>();
-        dairyBox.getItems().addAll("Milk", "Cheese", "Yogurt", "Cottage cheese");
-        dairyBox.setPromptText("Dairy");
-
-        ComboBox<String> snackBox = new ComboBox<>();
-        snackBox.getItems().addAll("Chips", "Nuts", "Crackers", "Snickers");
-        snackBox.setPromptText("Snack");
-
-        ComboBox<String> juiceBox = new ComboBox<>();
-        juiceBox.getItems().addAll("Apple", "Orange", "Grape", "Cherry");
-        juiceBox.setPromptText("Juice");
-
-        ComboBox<String> breadBox = new ComboBox<>();
-        breadBox.getItems().addAll("White", "Whole grain", "Baguette");
-        breadBox.setPromptText("Bread");
-
-        ComboBox<String> cerealBox = new ComboBox<>();
-        cerealBox.getItems().addAll("Cornflakes", "Muesli", "Oats", "Buckwheat");
-        cerealBox.setPromptText("Cereal");
+        ComboBox<String> drinkBox = createComboBox("Drink", "Cola", "Fanta", "Sprite");
+        ComboBox<String> dairyBox = createComboBox("Dairy", "Milk", "Cheese", "Yogurt");
+        ComboBox<String> snackBox = createComboBox("Snack", "Chips", "Nuts", "Crackers");
+        ComboBox<String> juiceBox = createComboBox("Juice", "Apple", "Orange", "Grape");
+        ComboBox<String> breadBox = createComboBox("Bread", "White", "Whole grain", "Baguette");
+        ComboBox<String> cerealBox = createComboBox("Cereal", "Cornflakes", "Muesli", "Oats");
 
         Button buyButton = new Button("Buy Products");
         buyButton.setOnAction(e -> {
-            selectedProducts.clear();
-            if (drinkBox.getValue() != null) selectedProducts.add(drinkBox.getValue());
-            if (dairyBox.getValue() != null) selectedProducts.add(dairyBox.getValue());
-            if (snackBox.getValue() != null) selectedProducts.add(snackBox.getValue());
-            if (juiceBox.getValue() != null) selectedProducts.add(juiceBox.getValue());
-            if (breadBox.getValue() != null) selectedProducts.add(breadBox.getValue());
-            if (cerealBox.getValue() != null) selectedProducts.add(cerealBox.getValue());
-
+            addIfSelected(drinkBox);
+            addIfSelected(dairyBox);
+            addIfSelected(snackBox);
+            addIfSelected(juiceBox);
+            addIfSelected(breadBox);
+            addIfSelected(cerealBox);
+            showPaymentPage();
         });
 
         VBox vbox = new VBox(10, shopLabel, drinkBox, dairyBox, snackBox,
@@ -166,6 +148,71 @@ public class LoginPage2 extends Application {
         Scene shopScene = new Scene(vbox, 400, 500);
         shopScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
         stage.setScene(shopScene);
+    }
+
+    private ComboBox<String> createComboBox(String prompt, String... items) {
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(items);
+        comboBox.setPromptText(prompt);
+        return comboBox;
+    }
+
+    private void addIfSelected(ComboBox<String> box) {
+        if (box.getValue() != null) selectedProducts.add(box.getValue());
+    }
+
+    private void showPaymentPage() {
+        Label label = new Label("Now you can buy all products!");
+
+        ToggleGroup paymentGroup = new ToggleGroup();
+        RadioButton cardBtn = new RadioButton("By Card");
+        cardBtn.setToggleGroup(paymentGroup);
+        RadioButton cashBtn = new RadioButton("By Cash");
+        cashBtn.setToggleGroup(paymentGroup);
+
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e -> showShopPage());
+
+        Button buyButton = new Button("Buy");
+        buyButton.setOnAction(e -> showSuccessPage());
+
+        VBox vbox = new VBox(10, label, cardBtn, cashBtn, backButton, buyButton);
+        vbox.setPadding(new Insets(20));
+
+        Scene paymentScene = new Scene(vbox, 400, 300);
+        paymentScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+        stage.setScene(paymentScene);
+    }
+
+    private void showSuccessPage() {
+        Label successLabel = new Label("You have successfully purchased all products.");
+        Button viewButton = new Button("View all bought products");
+        viewButton.setOnAction(e -> showBoughtProducts());
+
+        VBox vbox = new VBox(10, successLabel, viewButton);
+        vbox.setPadding(new Insets(20));
+
+        Scene successScene = new Scene(vbox, 400, 200);
+        successScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+        stage.setScene(successScene);
+    }
+
+    private void showBoughtProducts() {
+        Label label = new Label("There are all your products:");
+        StringBuilder productList = new StringBuilder();
+        for (String product : selectedProducts) {
+            productList.append("✔ ").append(product).append("\n");
+        }
+
+        TextArea productsArea = new TextArea(productList.toString());
+        productsArea.setEditable(false);
+
+        VBox vbox = new VBox(10, label, productsArea);
+        vbox.setPadding(new Insets(20));
+
+        Scene boughtScene = new Scene(vbox, 400, 300);
+        boughtScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+        stage.setScene(boughtScene);
     }
 
     public static void main(String[] args) {
