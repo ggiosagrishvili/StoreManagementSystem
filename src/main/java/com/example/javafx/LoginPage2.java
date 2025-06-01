@@ -2,10 +2,12 @@ package com.example.javafx;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +21,18 @@ public class LoginPage2 extends Application {
         showWelcomePage();
     }
 
+    @Override
+    public void stop() {
+        DatabaseConnection2.closeConnection();
+    }
+
     private void showWelcomePage() {
         Label greetLabel = new Label("Welcome to my online shop!");
         Button greetButton = new Button("Go to online shop");
 
         VBox inputLayout = new VBox(10, greetLabel, greetButton);
         inputLayout.setPadding(new Insets(20));
-        inputLayout.getStyleClass().add("center-box");
+        inputLayout.setAlignment(Pos.CENTER);
 
         Scene inputScene = new Scene(inputLayout, 400, 200);
         inputScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
@@ -51,7 +58,7 @@ public class LoginPage2 extends Application {
             String username = usernameField.getText();
             String password = passwordField.getText();
 
-            if (DatabaseConnection.validateUser(username, password)) {
+            if (DatabaseConnection2.validateUser(username, password)) {
                 messageLabel.setText("Logged in");
                 showShopPage();
             } else {
@@ -65,6 +72,7 @@ public class LoginPage2 extends Application {
         grid.setVgap(10);
         grid.setHgap(10);
         grid.setPadding(new Insets(20));
+        grid.setAlignment(Pos.CENTER);
 
         grid.add(userLabel, 0, 0);
         grid.add(usernameField, 1, 0);
@@ -99,7 +107,7 @@ public class LoginPage2 extends Application {
                 return;
             }
 
-            if (DatabaseConnection.registerUser(username, password)) {
+            if (DatabaseConnection2.registerUser(username, password)) {
                 messageLabel.setText("Registered successfully");
             } else {
                 messageLabel.setText("Registration failed");
@@ -112,6 +120,7 @@ public class LoginPage2 extends Application {
                 userLabel, usernameField, passLabel, passwordField,
                 signUpButton, backButton, messageLabel);
         vbox.setPadding(new Insets(20));
+        vbox.setAlignment(Pos.CENTER);
 
         Scene registerScene = new Scene(vbox, 400, 300);
         registerScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
@@ -144,6 +153,7 @@ public class LoginPage2 extends Application {
         VBox vbox = new VBox(10, shopLabel, drinkBox, dairyBox, snackBox,
                 juiceBox, breadBox, cerealBox, buyButton);
         vbox.setPadding(new Insets(20));
+        vbox.setAlignment(Pos.CENTER);
 
         Scene shopScene = new Scene(vbox, 400, 500);
         shopScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
@@ -178,6 +188,7 @@ public class LoginPage2 extends Application {
 
         VBox vbox = new VBox(10, label, cardBtn, cashBtn, backButton, buyButton);
         vbox.setPadding(new Insets(20));
+        vbox.setAlignment(Pos.CENTER);
 
         Scene paymentScene = new Scene(vbox, 400, 300);
         paymentScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
@@ -191,6 +202,7 @@ public class LoginPage2 extends Application {
 
         VBox vbox = new VBox(10, successLabel, viewButton);
         vbox.setPadding(new Insets(20));
+        vbox.setAlignment(Pos.CENTER);
 
         Scene successScene = new Scene(vbox, 400, 200);
         successScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
@@ -209,6 +221,7 @@ public class LoginPage2 extends Application {
 
         VBox vbox = new VBox(10, label, productsArea);
         vbox.setPadding(new Insets(20));
+        vbox.setAlignment(Pos.CENTER);
 
         Scene boughtScene = new Scene(vbox, 400, 300);
         boughtScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
