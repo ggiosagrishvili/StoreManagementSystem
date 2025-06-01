@@ -1,12 +1,10 @@
-/* ზოგადი Scene-ის სტილი */
 .root {
     -fx-background-color: linear-gradient(to bottom right, #dfe9f3, #ffffff);
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-font-size: 14px;
 }
 
-/* ღილაკები */
-.button {
+button {
     -fx-background-color: #4a90e2;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -20,13 +18,12 @@
     -fx-background-color: #357ab8;
 }
 
-/* ლეიბლები */
 .label {
     -fx-font-size: 16px;
     -fx-text-fill: #333333;
 }
 
-/* ტექსტური ველები */
+
 .text-field, .password-field {
     -fx-background-radius: 5;
     -fx-padding: 5 10;
@@ -35,14 +32,14 @@
     -fx-border-width: 1;
 }
 
-/* ComboBox */
+
 .combo-box {
     -fx-background-radius: 5;
     -fx-border-color: #cccccc;
     -fx-border-radius: 5;
 }
 
-/* TextArea */
+
 .text-area {
     -fx-background-color: #ffffff;
     -fx-border-color: #cccccc;
