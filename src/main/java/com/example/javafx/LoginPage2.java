@@ -28,18 +28,21 @@ public class LoginPage2 extends Application {
 
     private void showWelcomePage() {
         Label greetLabel = new Label("Welcome to my online shop!");
+        greetLabel.getStyleClass().add("label");
+
         Button greetButton = new Button("Go to online shop");
 
-        VBox inputLayout = new VBox(10, greetLabel, greetButton);
-        inputLayout.setPadding(new Insets(20));
-        inputLayout.setAlignment(Pos.CENTER);
-
-        Scene inputScene = new Scene(inputLayout, 400, 200);
-        inputScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+        VBox layout = new VBox(15, greetLabel, greetButton);
+        layout.setPadding(new Insets(20));
+        layout.setAlignment(Pos.CENTER);
 
         greetButton.setOnAction(e -> showLoginPage());
 
-        stage.setScene(inputScene);
+        Scene scene = new Scene(layout, 400, 200);
+        scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+
+        stage.setTitle("Welcome");
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -54,19 +57,19 @@ public class LoginPage2 extends Application {
         Button loginButton = new Button("Login");
         Button registerButton = new Button("Register");
 
-        loginButton.setOnAction(ev -> {
+        loginButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
 
             if (DatabaseConnection2.validateUser(username, password)) {
-                messageLabel.setText("Logged in");
+                messageLabel.setText("Logged in successfully!");
                 showShopPage();
             } else {
-                messageLabel.setText("Not logged in");
+                messageLabel.setText("Incorrect username or password.");
             }
         });
 
-        registerButton.setOnAction(el -> showRegisterPage());
+        registerButton.setOnAction(e -> showRegisterPage());
 
         GridPane grid = new GridPane();
         grid.setVgap(10);
@@ -82,9 +85,11 @@ public class LoginPage2 extends Application {
         grid.add(registerButton, 1, 2);
         grid.add(messageLabel, 1, 3);
 
-        Scene loginScene = new Scene(grid, 400, 250);
-        loginScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
-        stage.setScene(loginScene);
+        Scene scene = new Scene(grid, 400, 250);
+        scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+
+        stage.setTitle("Login");
+        stage.setScene(scene);
     }
 
     private void showRegisterPage() {
@@ -98,19 +103,19 @@ public class LoginPage2 extends Application {
         Button signUpButton = new Button("Sign up");
         Button backButton = new Button("Back");
 
-        signUpButton.setOnAction(ev -> {
+        signUpButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
 
             if (username.isEmpty() || password.isEmpty()) {
-                messageLabel.setText("Fill all fields");
+                messageLabel.setText("Please fill in all fields.");
                 return;
             }
 
             if (DatabaseConnection2.registerUser(username, password)) {
-                messageLabel.setText("Registered successfully");
+                messageLabel.setText("Registered successfully!");
             } else {
-                messageLabel.setText("Registration failed");
+                messageLabel.setText("Registration failed.");
             }
         });
 
@@ -122,9 +127,11 @@ public class LoginPage2 extends Application {
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
 
-        Scene registerScene = new Scene(vbox, 400, 300);
-        registerScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
-        stage.setScene(registerScene);
+        Scene scene = new Scene(vbox, 400, 300);
+        scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+
+        stage.setTitle("Register");
+        stage.setScene(scene);
     }
 
     private void showShopPage() {
@@ -155,9 +162,11 @@ public class LoginPage2 extends Application {
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
 
-        Scene shopScene = new Scene(vbox, 400, 500);
-        shopScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
-        stage.setScene(shopScene);
+        Scene scene = new Scene(vbox, 400, 500);
+        scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+
+        stage.setTitle("Shop");
+        stage.setScene(scene);
     }
 
     private ComboBox<String> createComboBox(String prompt, String... items) {
@@ -168,7 +177,9 @@ public class LoginPage2 extends Application {
     }
 
     private void addIfSelected(ComboBox<String> box) {
-        if (box.getValue() != null) selectedProducts.add(box.getValue());
+        if (box.getValue() != null) {
+            selectedProducts.add(box.getValue());
+        }
     }
 
     private void showPaymentPage() {
@@ -190,9 +201,11 @@ public class LoginPage2 extends Application {
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
 
-        Scene paymentScene = new Scene(vbox, 400, 300);
-        paymentScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
-        stage.setScene(paymentScene);
+        Scene scene = new Scene(vbox, 400, 300);
+        scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+
+        stage.setTitle("Payment");
+        stage.setScene(scene);
     }
 
     private void showSuccessPage() {
@@ -204,13 +217,16 @@ public class LoginPage2 extends Application {
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
 
-        Scene successScene = new Scene(vbox, 400, 200);
-        successScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
-        stage.setScene(successScene);
+        Scene scene = new Scene(vbox, 400, 200);
+        scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+
+        stage.setTitle("Success");
+        stage.setScene(scene);
     }
 
     private void showBoughtProducts() {
         Label label = new Label("There are all your products:");
+
         StringBuilder productList = new StringBuilder();
         for (String product : selectedProducts) {
             productList.append("✔ ").append(product).append("\n");
@@ -223,9 +239,11 @@ public class LoginPage2 extends Application {
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
 
-        Scene boughtScene = new Scene(vbox, 400, 300);
-        boughtScene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
-        stage.setScene(boughtScene);
+        Scene scene = new Scene(vbox, 400, 300);
+        scene.getStylesheets().add(getClass().getResource("style2.css").toExternalForm());
+
+        stage.setTitle("Bought Products");
+        stage.setScene(scene);
     }
 
     public static void main(String[] args) {

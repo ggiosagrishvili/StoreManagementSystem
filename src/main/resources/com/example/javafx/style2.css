@@ -1,49 +1,62 @@
+/* ფონის ფერი ყველა გვერდზე */
 .root {
-    -fx-background-color: linear-gradient(to bottom right, #dfe9f3, #ffffff);
-    -fx-font-family: "Segoe UI", sans-serif;
-    -fx-font-size: 14px;
+    -fx-background-color: #f0f4f8;
 }
 
-button {
-    -fx-background-color: #4a90e2;
+/* ყველა ღილაკისთვის */
+.button {
+    -fx-background-color: #4CAF50;
     -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 8;
-    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-background-radius: 5;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
 .button:hover {
-    -fx-background-color: #357ab8;
+    -fx-background-color: #45a049;
 }
 
+/* ტექსტური ლეიბლებისთვის */
 .label {
     -fx-font-size: 16px;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
 }
 
-
+/* ტექსტფილდებისა და პაროლფილდების სტილი */
 .text-field, .password-field {
-    -fx-background-radius: 5;
-    -fx-padding: 5 10;
-    -fx-border-color: #cccccc;
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
     -fx-border-radius: 5;
-    -fx-border-width: 1;
+    -fx-padding: 6 10;
+    -fx-font-size: 14px;
 }
 
-
+/* ComboBox-ის სტილი */
 .combo-box {
-    -fx-background-radius: 5;
-    -fx-border-color: #cccccc;
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
     -fx-border-radius: 5;
+    -fx-font-size: 14px;
 }
 
-
+/* TextArea (შესყიდული პროდუქტების გვერდი) */
 .text-area {
+    -fx-font-size: 14px;
     -fx-background-color: #ffffff;
     -fx-border-color: #cccccc;
     -fx-border-radius: 5;
     -fx-padding: 10;
+}
+
+/* RadioButton სტილი */
+.radio-button {
     -fx-font-size: 14px;
+}
+
+/* მარჟინები VBox და GridPane შიგნით */
+.vbox, .grid-pane {
+    -fx-spacing: 10;
+    -fx-alignment: center;
 }
