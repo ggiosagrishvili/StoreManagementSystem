@@ -1,9 +1,7 @@
-/* ფონის ფერი ყველა გვერდზე */
 .root {
     -fx-background-color: #f0f4f8;
 }
 
-/* ყველა ღილაკისთვის */
 .button {
     -fx-background-color: #4CAF50;
     -fx-text-fill: white;
@@ -17,14 +15,12 @@
     -fx-background-color: #45a049;
 }
 
-/* ტექსტური ლეიბლებისთვის */
 .label {
     -fx-font-size: 16px;
     -fx-text-fill: #333;
     -fx-font-weight: bold;
 }
 
-/* ტექსტფილდებისა და პაროლფილდების სტილი */
 .text-field, .password-field {
     -fx-background-color: white;
     -fx-border-color: #ccc;
@@ -33,7 +29,6 @@
     -fx-font-size: 14px;
 }
 
-/* ComboBox-ის სტილი */
 .combo-box {
     -fx-background-color: white;
     -fx-border-color: #ccc;
@@ -41,7 +36,6 @@
     -fx-font-size: 14px;
 }
 
-/* TextArea (შესყიდული პროდუქტების გვერდი) */
 .text-area {
     -fx-font-size: 14px;
     -fx-background-color: #ffffff;
@@ -50,12 +44,10 @@
     -fx-padding: 10;
 }
 
-/* RadioButton სტილი */
 .radio-button {
     -fx-font-size: 14px;
 }
 
-/* მარჟინები VBox და GridPane შიგნით */
 .vbox, .grid-pane {
     -fx-spacing: 10;
     -fx-alignment: center;
